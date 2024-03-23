@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('Deploy') {
             steps {
-                sshagent(['your-credential-id']) {
-                    sh 'ansible-playbook -i hosts playbook.yml'
+                sshagent(['managed-node']) {
+                    sh 'ansible-playbook -i hosts site.yml'
                 }
             }
         }

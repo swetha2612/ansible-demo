@@ -1,8 +1,15 @@
 ---
-- hosts: all
-  become: true
+- name: Install Apache HTTP Server on Red Hat-based Systems
+  hosts: all
+  become: yes
   tasks:
-    - name: Ensure Nginx is installed
-      apt:
-        name: nginx
+    - name: Install httpd
+      yum:
+        name: httpd
         state: present
+
+    - name: Start and enable httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes

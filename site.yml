@@ -1,6 +1,6 @@
 ---
 - name: Install Apache HTTP Server on Red Hat-based Systems
-  hosts: webservers
+  hosts: all
   become: yes
   tasks:
     - name: Install httpd

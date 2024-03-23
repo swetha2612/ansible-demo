@@ -1,6 +1,6 @@
 ---
 - name: Ping all hosts
-  hosts: all
+  hosts: all  # Or specify a group name to target only that group
   gather_facts: no
 
   tasks:

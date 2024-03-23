@@ -1,5 +1,5 @@
 [web_servers]
-172.31.8.248 ansible_user=ec2-user
+#172.31.8.248 ansible_user=ec2-user
 
 [db_servers]
 172.31.32.70 ansible_user=ec2-user

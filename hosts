@@ -3,3 +3,4 @@
 
 [db_servers]
 172.31.32.70 ansible_user=ec2-user
+172.31.2.197

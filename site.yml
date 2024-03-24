@@ -1,18 +1,22 @@
 ---
 - hosts: all
-  gather_facts: yes  # Gather facts for all hosts
   tasks:
-    - name: Display the distribution name
-      debug:
-        msg: "Distribution name: {{ ansible_distribution }}"
 
-    - name: Display the kernel version
+    - name: Debug a string
       debug:
-        msg: "Kernel version: {{ ansible_kernel }}"
+        msg: "Hello, World!"
 
-- hosts: all
-  gather_facts: true  # Gather facts only if not already available
-  tasks:
-    - name: Display the default IPv4 address
+    - name: Debug a variable
+      vars:
+        my_variable: "This is a variable"
       debug:
-        msg: "Default IPv4 address: {{ ansible_default_ipv4.address }}"
+        var: my_variable
+
+    - name: Debug a data structure
+      vars:
+        my_dict:
+          name: Alice
+          age: 25
+          city: New York
+      debug:
+        var: my_dict

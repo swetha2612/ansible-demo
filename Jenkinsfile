@@ -4,8 +4,10 @@ pipeline {
     stages {
         stage('Ansible Playbook') {
             steps {
-                ansiColor('xterm') {
-                    ansiblePlaybook credentialsId: 'ec2-user-pemfile', disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts', playbook: 'site.yml'
+                script {
+                    ansiColor('xterm') {
+                        ansiblePlaybook credentialsId: 'ec2-user-pemfile', disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts', playbook: 'site.yml'
+                    }
                 }
             }
         }

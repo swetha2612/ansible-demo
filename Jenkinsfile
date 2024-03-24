@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     ansiColor('xterm') {
-                        sh 'export ANSIBLE_FORCE_COLOR=true && ansible-playbook -i inventory playbook.yml'
+                        sh 'export ANSIBLE_FORCE_COLOR=true && ansible-playbook -i hosts site.yml'
                     }
                 }
             }

@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Ansible Playbook') {
             steps {
-                ansiblePlaybook credentialsId: 'ec2-user-pemfile', inventory: 'hosts', playbook: 'site.yml'
+                ansiblePlaybook credentialsId: 'ec2-user-pemfile', inventory: 'hosts', playbook: 'sicte.yml'
             }
         }
     }

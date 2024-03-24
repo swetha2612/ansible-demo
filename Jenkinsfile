@@ -1,12 +1,11 @@
 pipeline {
     agent any
-
     stages {
-        stage('Ansible Playbook') {
+        stage('Color Test') {
             steps {
                 script {
                     ansiColor('xterm') {
-                        ansiblePlaybook credentialsId: 'ec2-user-pemfile', disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts', playbook: 'site.yml'
+                        echo '\033[31mThis should be red\033[0m'
                     }
                 }
             }

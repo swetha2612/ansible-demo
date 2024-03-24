@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     ansiColor('xterm') {
-                        sh 'export ANSIBLE_FORCE_COLOR=true && ansible-playbook -i hosts site.yml'
+                        ansiblePlaybook credentialsId: 'ec2-user-pemfile', disableHostKeyChecking: false, installation: 'ansible', inventory: 'hosts', playbook: 'site.yml'
                     }
                 }
             }

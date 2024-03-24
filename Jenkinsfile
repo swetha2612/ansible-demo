@@ -1,17 +1,31 @@
 pipeline {
     agent any
 
+    environment {
+        GITHUB_CREDS = credentials('git-credentials') // Replace 'github-credentials-id' with your actual credential ID
+        HOST_CREDS = credentials('ec2-user-pemfile') // Replace 'host-credentials-id' with your actual credential ID
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git 'https://your-repository-url.com/ansible-demo.git'
+                git branch: 'main',
+                    credentialsId: "${GITHUB_CREDS}",
+                    url: 'https://github.com/WeLearnWeShare/ansible-demo.git'
             }
         }
-        
-        stage('Run Ansible Playbook') {
+
+        stage('Deploy') {
             steps {
-                script {
-                    sh 'ansible-playbook -i hosts site.yml'
+                ansiColor('xterm') {
+                    sh '''
+                        export ANSIBLE_FORCE_COLOR=true
+                        ansible-playbook --private-key=$HOME/.ssh/id_rsa \
+                                         --user=ec2-user \
+                                         --become \
+                                         -i hosts \
+                                         site.yml
+                    '''
                 }
             }
         }

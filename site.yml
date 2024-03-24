@@ -1,15 +1,23 @@
 ---
-- name: Install Apache HTTP Server on Red Hat-based Systems
+- name: Install Apache HTTPD and deploy a sample HTML file
   hosts: all
-  become: yes
+  become: yes  # Use sudo to escalate privileges
   tasks:
-    - name: Install httpd
-      yum:
-        name: httpd
-        state: present
+  - name: Install httpd
+    yum:
+      name: httpd
+      state: present
 
-    - name: Start and enable httpd
-      service:
-        name: httpd
-        state: started
-        enabled: yes
+  - name: Copy the sample index.html to the document root
+    copy:
+      src: /home/ansible/index.html
+      dest: /var/www/html/index.html
+      owner: apache
+      group: apache
+      mode: '0644'
+
+  - name: Ensure httpd is running and enabled
+    service:
+      name: httpd
+      state: started
+      enabled: yes

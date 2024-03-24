@@ -1,33 +1,21 @@
 pipeline {
-    agent any
-
-    environment {
-        GITHUB_CREDS = credentials('git-credentials') // Replace 'github-credentials-id' with your actual credential ID
-        HOST_CREDS = credentials('ec2-user-pemfile') // Replace 'host-credentials-id' with your actual credential ID
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                    credentialsId: "${GITHUB_CREDS}",
-                    url: 'https://github.com/WeLearnWeShare/ansible-demo.git'
-            }
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        // Use SSH Agent for GitHub checkout
+        sshagent(credentials: ['git-credentials	']) {
+          git url: 'git@github.com:WeLearnWeShare/ansible-demo.git'
         }
-
-        stage('Deploy') {
-            steps {
-                ansiColor('xterm') {
-                    sh '''
-                        export ANSIBLE_FORCE_COLOR=true
-                        ansible-playbook --private-key=$HOME/.ssh/id_rsa \
-                                         --user=ec2-user \
-                                         --become \
-                                         -i hosts \
-                                         site.yml
-                    '''
-                }
-            }
-        }
+      }
     }
+    stage('Deploy to Managed Node') {
+      steps {
+        // Use SSH Agent to run commands on a managed node
+        sshagent(credentials: ['ec2-user-pemfile']) {
+          sh 'ssh user@managed_node_address ansible-playbook -i inventory_file playbook.yml'
+        }
+      }
+    }
+  }
 }

@@ -1,15 +1,18 @@
 ---
-- name: Install Apache HTTPD and deploy a sample HTML file
-  hosts: all
-  become: yes  # Use sudo to escalate privileges
+- hosts: all
+  gather_facts: yes  # Gather facts for all hosts
   tasks:
-  - name: Install httpd
-    yum:
-      name: httpd
-      state: present
+    - name: Display the distribution name
+      debug:
+        msg: "Distribution name: {{ ansible_distribution }}"
 
-  - name: Ensure httpd is running and enabled
-    service:
-      name: httpd
-      state: started
-      enabled: yes
+    - name: Display the kernel version
+      debug:
+        msg: "Kernel version: {{ ansible_kernel }}"
+
+- hosts: all
+  gather_facts: true  # Gather facts only if not already available
+  tasks:
+    - name: Display the default IPv4 address
+      debug:
+        msg: "Default IPv4 address: {{ ansible_default_ipv4.address }}"

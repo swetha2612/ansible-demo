@@ -1,11 +1,12 @@
 pipeline {
     agent any
+
     stages {
-        stage('Color Test') {
+        stage('Ansible Playbook') {
             steps {
                 script {
                     ansiColor('xterm') {
-                        echo '\033[31mThis should be red\033[0m'
+                        sh 'export ANSIBLE_FORCE_COLOR=true && ansible-playbook -i inventory playbook.yml'
                     }
                 }
             }
